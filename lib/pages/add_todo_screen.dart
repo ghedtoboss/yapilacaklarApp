@@ -39,6 +39,7 @@ class AddTodoPage extends StatelessWidget {
               height: Get.height * 0.3,
             ),
             MyTextFieldWidget(
+              isMaxLinesNull: true,
                 controller: todoServiceController.todoController,
                 isObscure: false,
                 labetText: "Görev tanımı",

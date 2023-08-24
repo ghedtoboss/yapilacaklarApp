@@ -35,16 +35,19 @@ class RegisterPage extends StatelessWidget {
                           image: AssetImage("assets/images/logo.jpg"))),
                 ),
                 MyTextFieldWidget(
+                  isMaxLinesNull: true,
                     controller: authController.adSoyadController,
                     isObscure: false,
                     labetText: "Ad soyad",
                     iconData: Icons.person),
                 MyTextFieldWidget(
+                  isMaxLinesNull: true,
                     controller: authController.mailController,
                     isObscure: false,
                     labetText: "Email",
                     iconData: Icons.mail),
                 MyTextFieldWidget(
+                  isMaxLinesNull: false,
                     controller: authController.passwordController,
                     isObscure: true,
                     labetText: "Şifre",

@@ -35,11 +35,13 @@ class LoginPage extends StatelessWidget {
                           image: AssetImage("assets/images/logo.jpg"))),
                 ),
                 MyTextFieldWidget(
+                  isMaxLinesNull: true,
                     controller: authController.mailController,
                     isObscure: false,
                     labetText: "Email",
                     iconData: Icons.mail),
                 MyTextFieldWidget(
+                  isMaxLinesNull: false,
                     controller: authController.passwordController,
                     isObscure: true,
                     labetText: "Şifre",

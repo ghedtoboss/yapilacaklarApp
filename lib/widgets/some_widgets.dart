@@ -10,11 +10,12 @@ class MyTextFieldWidget extends StatelessWidget {
       required this.controller,
       required this.isObscure,
       required this.labetText,
-      required this.iconData});
+      required this.iconData, required this.isMaxLinesNull});
   final TextEditingController controller;
   final bool isObscure;
   final String labetText;
   final IconData iconData;
+  final bool isMaxLinesNull;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,9 @@ class MyTextFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: TextField(
         controller: controller,
+        maxLines: isMaxLinesNull ? null : 1,
         obscureText: isObscure,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         cursorColor: Colors.purple,
         decoration: InputDecoration(
             border: const OutlineInputBorder(
