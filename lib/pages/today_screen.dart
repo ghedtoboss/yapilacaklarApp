@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yapilcaklar/models/todo_model.dart';
-import 'package:yapilcaklar/pages/add_todo_screen.dart';
 import 'package:yapilcaklar/service/todo_service.dart';
 
 import '../widgets/some_widgets.dart';
@@ -63,13 +62,13 @@ class GetUserTodayTodos extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           return Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: snapshot.data?.docs.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   MyToDo todo =
