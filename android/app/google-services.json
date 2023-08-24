@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "771915860369",
+    "project_id": "yapilcaklar-54b0c",
+    "storage_bucket": "yapilcaklar-54b0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771915860369:android:24d04f43e9ea080e0bb230",
+        "android_client_info": {
+          "package_name": "com.example.yapilcaklar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "771915860369-0ura58rjknj07tej4v5nnibia6g18qjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC-_23J7fv6CEPYvHyMWlscs-5e-w18j0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "771915860369-0ura58rjknj07tej4v5nnibia6g18qjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
