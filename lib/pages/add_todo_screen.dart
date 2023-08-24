@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rive/rive.dart';
 import 'package:yapilcaklar/enumsAndExts/extensions.dart';
 import 'package:yapilcaklar/service/todo_service.dart';
 import 'package:yapilcaklar/widgets/some_widgets.dart';
@@ -21,11 +22,14 @@ class AddTodoPage extends StatelessWidget {
         elevation: 10,
         backgroundColor: const Color.fromARGB(255, 24, 22, 22),
         automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/homeLogo.png"))),
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: Container(
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/homeLogo.png"))),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -35,11 +39,16 @@ class AddTodoPage extends StatelessWidget {
         color: const Color.fromARGB(255, 24, 22, 22),
         child: Column(
           children: [
-            SizedBox(
-              height: Get.height * 0.3,
+            Container(
+              width: Get.width,
+              height: Get.height * 0.4,
+              child: RiveAnimation.asset(
+                "assets/animations/pencil.riv",
+                fit: BoxFit.cover,
+              ),
             ),
             MyTextFieldWidget(
-              isMaxLinesNull: true,
+                isMaxLinesNull: true,
                 controller: todoServiceController.todoController,
                 isObscure: false,
                 labetText: "Görev tanımı",

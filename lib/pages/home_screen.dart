@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 24, 22, 22),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
@@ -27,11 +28,14 @@ class HomeScreen extends StatelessWidget {
           elevation: 10,
           backgroundColor: const Color.fromARGB(255, 24, 22, 22),
           automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/homeLogo.png"))),
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Container(
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/homeLogo.png"))),
+            ),
           ),
         ),
         body: SingleChildScrollView(

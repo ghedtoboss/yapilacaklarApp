@@ -22,7 +22,7 @@ class ToDoService extends GetxController {
 
   Future<void> createToDo() async {
     MyToDo todo = MyToDo(
-        id: "id",
+        id: "",
         authorId: userServiceController.userId.value,
         todo: todoController.text,
         isFinished: false,
