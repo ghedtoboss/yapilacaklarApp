@@ -1,16 +1,22 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yapilcaklar/enumsAndExts/extensions.dart';
+import 'package:yapilcaklar/models/note_model.dart';
 import 'package:yapilcaklar/models/todo_model.dart';
+import 'package:yapilcaklar/service/note_service.dart';
 import 'package:yapilcaklar/service/todo_service.dart';
 
 class MyTextFieldWidget extends StatelessWidget {
-  const MyTextFieldWidget(
-      {super.key,
-      required this.controller,
-      required this.isObscure,
-      required this.labetText,
-      required this.iconData, required this.isMaxLinesNull});
+  const MyTextFieldWidget({
+    super.key,
+    required this.controller,
+    required this.isObscure,
+    required this.labetText,
+    required this.iconData,
+    required this.isMaxLinesNull,
+  });
   final TextEditingController controller;
   final bool isObscure;
   final String labetText;
@@ -265,6 +271,221 @@ class TodoCard extends StatelessWidget {
                     ))
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MyHomeContainer extends StatelessWidget {
+  const MyHomeContainer(
+      {super.key,
+      required this.widget,
+      required this.text,
+      required this.iconData1,
+      required this.iconData2});
+  final Widget widget;
+  final String text;
+  final IconData iconData1;
+  final IconData iconData2;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Get.to(widget, transition: Transition.rightToLeft);
+      },
+      child: Container(
+        width: Get.width,
+        height: Get.height * 0.2,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 24, 22, 22),
+                  Color.fromARGB(255, 94, 17, 108)
+                ])),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    text,
+                    style: TextStyle(
+                        fontFamily: "luck", fontSize: 30, color: Colors.white),
+                  ),
+                  Icon(
+                    iconData1,
+                    color: Colors.white,
+                    size: 40,
+                  )
+                ],
+              ),
+              Icon(
+                iconData2,
+                color: Colors.white,
+                size: 40,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NoteCard extends StatelessWidget {
+  const NoteCard({
+    super.key,
+    required this.note,
+    required this.noteServiceController,
+  });
+  final MyNote note;
+  final NoteService noteServiceController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  backgroundColor: Colors.transparent,
+                  child: Container(
+                    height: Get.height * 0.6,
+                    width: Get.width * 0.8,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 24, 22, 22),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  noteServiceController.deleteNote(note);
+                                  Get.back();
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                )),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: Get.width * 0.7,
+                            height: Get.height * 0.08,
+                            child: Text(
+                              note.title,
+                              maxLines: 10,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "carter",
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                          indent: 20,
+                          endIndent: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: Get.width * 0.7,
+                            height: Get.height * 0.3,
+                            child: Text(
+                              note.content,
+                              style: const TextStyle(
+                                  fontFamily: "robotolight",
+                                  fontSize: 15,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
+        child: Container(
+          width: Get.width * 0.4,
+          height: Get.height * 0.2,
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 221, 217, 217),
+              borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: Get.height * 0.05,
+                child: Text(
+                  note.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "carter",
+                  ),
+                ),
+              ),
+              const Divider(
+                indent: 10,
+                endIndent: 10,
+                thickness: 1,
+                color: Colors.black,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                ),
+                height: Get.height * 0.131,
+                width: Get.width * 0.4,
+                child: Text(
+                  note.content,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 6,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "robomedium",
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rive/rive.dart';
 import 'package:yapilcaklar/service/auth_service.dart';
 
 import '../widgets/some_widgets.dart';
@@ -30,24 +31,22 @@ class RegisterPage extends StatelessWidget {
                 Container(
                   width: Get.width * 0.6,
                   height: Get.height * 0.3,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/logo.jpg"))),
+                  child: RiveAnimation.asset("assets/animations/logo.riv"),
                 ),
                 MyTextFieldWidget(
-                  isMaxLinesNull: true,
+                    isMaxLinesNull: true,
                     controller: authController.adSoyadController,
                     isObscure: false,
                     labetText: "Ad soyad",
                     iconData: Icons.person),
                 MyTextFieldWidget(
-                  isMaxLinesNull: true,
+                    isMaxLinesNull: true,
                     controller: authController.mailController,
                     isObscure: false,
                     labetText: "Email",
                     iconData: Icons.mail),
                 MyTextFieldWidget(
-                  isMaxLinesNull: false,
+                    isMaxLinesNull: false,
                     controller: authController.passwordController,
                     isObscure: true,
                     labetText: "Şifre",

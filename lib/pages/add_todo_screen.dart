@@ -12,6 +12,7 @@ class AddTodoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 24, 22, 22),
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -33,39 +34,34 @@ class AddTodoPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-          child: Container(
-        width: Get.width,
-        height: Get.height,
-        color: const Color.fromARGB(255, 24, 22, 22),
-        child: Column(
-          children: [
-            Container(
-              width: Get.width,
-              height: Get.height * 0.4,
-              child: RiveAnimation.asset(
-                "assets/animations/pencil.riv",
-                fit: BoxFit.cover,
-              ),
+          child: Column(
+        children: [
+          Container(
+            width: Get.width,
+            height: Get.height * 0.4,
+            child: const RiveAnimation.asset(
+              "assets/animations/pencil.riv",
+              fit: BoxFit.cover,
             ),
-            MyTextFieldWidget(
-                isMaxLinesNull: true,
-                controller: todoServiceController.todoController,
-                isObscure: false,
-                labetText: "Görev tanımı",
-                iconData: Icons.notes_sharp),
-            DateTimePicker(todoServiceController: todoServiceController),
-            SizedBox(
-              height: Get.height * 0.3,
-            ),
-            MyElevatedButton(
-                text: "Ekle",
-                onPressed: () {
-                  todoServiceController.createToDo();
-                  Get.back();
-                  todoServiceController.clear();
-                })
-          ],
-        ),
+          ),
+          MyTextFieldWidget(
+              isMaxLinesNull: true,
+              controller: todoServiceController.todoController,
+              isObscure: false,
+              labetText: "Görev tanımı",
+              iconData: Icons.notes_sharp),
+          DateTimePicker(todoServiceController: todoServiceController),
+          SizedBox(
+            height: Get.height * 0.1,
+          ),
+          MyElevatedButton(
+              text: "Ekle",
+              onPressed: () {
+                todoServiceController.createToDo();
+                Get.back();
+                todoServiceController.clear();
+              })
+        ],
       )),
     );
   }

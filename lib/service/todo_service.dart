@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,8 @@ class ToDoService extends GetxController {
   final userServiceController = Get.put(UserService());
   FirebaseFirestore firebase = FirebaseFirestore.instance;
   TextEditingController todoController = TextEditingController();
+
+  RxInt todayTodoCount = 0.obs;
 
   var selectedDate = DateTime.now().obs;
 
@@ -60,6 +64,23 @@ class ToDoService extends GetxController {
         .where("date", isGreaterThanOrEqualTo: startMillis)
         .where("date", isLessThanOrEqualTo: endMillis)
         .snapshots();
+  }
+
+  Future<void> getTodayTodosCount() async {
+    DateTime now = DateTime.now();
+    DateTime startOfDay = DateTime(now.year, now.month, now.day);
+    DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59, 999);
+
+    int startMillis = startOfDay.millisecondsSinceEpoch;
+    int endMillis = endOfDay.millisecondsSinceEpoch;
+
+    todayTodoCount.value = await firebase
+        .collection("Todos")
+        .where("authorId", isEqualTo: userServiceController.userId.value)
+        .where("date", isGreaterThanOrEqualTo: startMillis)
+        .where("date", isLessThanOrEqualTo: endMillis)
+        .snapshots()
+        .length;
   }
 
   Future<void> finishedTodo(MyToDo todo) async {
