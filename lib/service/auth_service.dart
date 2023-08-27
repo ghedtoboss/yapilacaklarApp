@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:yapilcaklar/models/user_model.dart';
 import 'package:yapilcaklar/pages/home_screen.dart';
 import 'package:yapilcaklar/pages/login_screen.dart';
+import 'package:yapilcaklar/service/user_service.dart';
 
 class AuthService extends GetxController {
   TextEditingController adSoyadController = TextEditingController();
@@ -16,6 +17,8 @@ class AuthService extends GetxController {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firebase = FirebaseFirestore.instance;
+
+  final userServiceController = Get.put(UserService());
 
   void clear() {
     adSoyadController.clear();
@@ -53,8 +56,10 @@ class AuthService extends GetxController {
     await auth
         .signInWithEmailAndPassword(
             email: mailController.text, password: passwordController.text)
-        .then((userCredential) =>
-            Get.to(HomeScreen(), transition: Transition.fade));
+        .then((userCredential) {
+      userServiceController.userId.value = userCredential.user?.uid ?? "";
+      Get.to(HomeScreen(), transition: Transition.fade);
+    });
   }
 
   Future<void> quit() async {
