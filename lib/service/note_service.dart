@@ -40,6 +40,19 @@ class NoteService extends GetxController {
         .snapshots();
   }
 
+  Future<void> editNote(MyNote note, TextEditingController editTiteController,
+      TextEditingController editContentController) async {
+    DocumentReference noteDocRef = firebase.collection("Notes").doc(note.id);
+    WriteBatch batch = firebase.batch();
+    batch
+        .update(noteDocRef, <String, String>{"title": editTiteController.text});
+
+    batch.update(
+        noteDocRef, <String, String>{"content": editContentController.text});
+
+    batch.commit();
+  }
+
   Future<void> deleteNote(MyNote note) async {
     await firebase.collection("Notes").doc(note.id).delete();
   }

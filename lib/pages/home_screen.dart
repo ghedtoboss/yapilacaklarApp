@@ -61,9 +61,7 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.08,
               ),
-              GetTodayTodosCount(
-                todoServiceController: todoServiceController,
-              ),
+              GetTodayTodosCount(),
               SizedBox(
                 height: Get.height * 0.05,
               ),
@@ -97,20 +95,20 @@ class HomeScreen extends StatelessWidget {
 }
 
 class GetTodayTodosCount extends StatelessWidget {
-  const GetTodayTodosCount({super.key, required this.todoServiceController});
-  final ToDoService todoServiceController;
+  GetTodayTodosCount({
+    super.key,
+  });
+  final todoServiceController = Get.put(ToDoService());
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: todoServiceController.getUserTodayTodos(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Veri beklenirken döndürülen widget
+          return const CircularProgressIndicator(); //
         } else if (snapshot.hasError) {
-          return Text(
-              "Hata: ${snapshot.error}"); // Hata durumunda döndürülen widget
+          return Text("Hata: ${snapshot.error}");
         } else {
-          // Stream'den dönen verinin sayısı alınıyor
           int count = snapshot.data?.docs.length ?? 0;
 
           return FittedBox(
@@ -122,9 +120,7 @@ class GetTodayTodosCount extends StatelessWidget {
                 const TextSpan(text: "Bugün yapılacak işlerin\nsayısı: "),
                 TextSpan(
                     text: '$count',
-                    style: TextStyle(
-                        color: Colors
-                            .purple)), // count değerinin rengini değiştiriyoruz
+                    style: const TextStyle(color: Colors.purple)),
               ],
             ),
           ));

@@ -66,21 +66,12 @@ class ToDoService extends GetxController {
         .snapshots();
   }
 
-  Future<void> getTodayTodosCount() async {
-    DateTime now = DateTime.now();
-    DateTime startOfDay = DateTime(now.year, now.month, now.day);
-    DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59, 999);
-
-    int startMillis = startOfDay.millisecondsSinceEpoch;
-    int endMillis = endOfDay.millisecondsSinceEpoch;
-
-    todayTodoCount.value = await firebase
+  Future<void> editTodo(
+      MyToDo todo, TextEditingController editTodoController) async {
+    await firebase
         .collection("Todos")
-        .where("authorId", isEqualTo: userServiceController.userId.value)
-        .where("date", isGreaterThanOrEqualTo: startMillis)
-        .where("date", isLessThanOrEqualTo: endMillis)
-        .snapshots()
-        .length;
+        .doc(todo.id)
+        .update(<String, String>{"todo": editTodoController.text});
   }
 
   Future<void> finishedTodo(MyToDo todo) async {

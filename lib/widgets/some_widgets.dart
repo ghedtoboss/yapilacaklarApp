@@ -1,10 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yapilcaklar/enumsAndExts/extensions.dart';
 import 'package:yapilcaklar/models/note_model.dart';
 import 'package:yapilcaklar/models/todo_model.dart';
+import 'package:yapilcaklar/pages/todos_screen.dart';
 import 'package:yapilcaklar/service/note_service.dart';
 import 'package:yapilcaklar/service/todo_service.dart';
 
@@ -105,8 +104,8 @@ class TodoCard extends StatelessWidget {
                   child: Container(
                     height: Get.height * 0.6,
                     width: Get.width * 0.8,
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 24, 22, 22),
+                    decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 24, 22, 22),
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -116,7 +115,7 @@ class TodoCard extends StatelessWidget {
                             onPressed: () {
                               Get.back();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.close,
                               color: Colors.white,
                             )),
@@ -125,26 +124,37 @@ class TodoCard extends StatelessWidget {
                           child: Container(
                             width: Get.width * 0.7,
                             height: Get.height * 0.4,
-                            child: Text(
-                              todo.todo,
-                              maxLines: 10,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "carter",
-                                  fontSize: 15),
+                            child: SingleChildScrollView(
+                              child: Text(
+                                todo.todo,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "carter",
+                                    fontSize: 15),
+                              ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            todo.date.formatDate,
-                            style: TextStyle(
-                                fontFamily: "robotolight",
-                                fontSize: 15,
-                                color: Colors.white),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                todo.date.formatDate,
+                                style: const TextStyle(
+                                    fontFamily: "robotolight",
+                                    fontSize: 15,
+                                    color: Colors.white),
+                              ),
+                            ),
+                            MyTextButton(
+                                onPressed: () async {
+                                  await Get.to(EditTodoScreen(todo: todo));
+                                  Get.back();
+                                },
+                                text: "Düzenle")
+                          ],
                         )
                       ],
                     ),
@@ -174,7 +184,7 @@ class TodoCard extends StatelessWidget {
                         todo.todo,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: "carter",
                           fontSize: 15,
                         ),
@@ -182,7 +192,8 @@ class TodoCard extends StatelessWidget {
                     ),
                     Text(
                       todo.date.formatDate,
-                      style: TextStyle(fontFamily: "robotolight", fontSize: 15),
+                      style: const TextStyle(
+                          fontFamily: "robotolight", fontSize: 15),
                     )
                   ],
                 ),
@@ -196,18 +207,18 @@ class TodoCard extends StatelessWidget {
                               child: Container(
                                 width: Get.width * 0.8,
                                 height: Get.height * 0.25,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 24, 22, 22),
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 24, 22, 22),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(15.0),
+                                  padding: const EdgeInsets.all(15.0),
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Görevinizi yaptınız mı?",
                                         style: TextStyle(
                                             fontFamily: "luck",
@@ -217,7 +228,7 @@ class TodoCard extends StatelessWidget {
                                       Container(
                                           width: Get.width * 0.8,
                                           height: Get.height * 0.08,
-                                          child: Text(
+                                          child: const Text(
                                             "Eminseniz tamamla butonuna basabilirsiniz.\nGörev silinecek",
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 3,
@@ -236,7 +247,7 @@ class TodoCard extends StatelessWidget {
                                               onPressed: () {
                                                 Get.back();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "İPTAL",
                                                 style: TextStyle(
                                                     color: Colors.purple,
@@ -249,7 +260,7 @@ class TodoCard extends StatelessWidget {
                                                     .finishedTodo(todo);
                                                 Get.back();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                 "Tamamla",
                                                 style: TextStyle(
                                                     color: Colors.purple,
@@ -347,9 +358,11 @@ class NoteCard extends StatelessWidget {
     super.key,
     required this.note,
     required this.noteServiceController,
+    required this.onPressed,
   });
   final MyNote note;
   final NoteService noteServiceController;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -365,8 +378,8 @@ class NoteCard extends StatelessWidget {
                   child: Container(
                     height: Get.height * 0.6,
                     width: Get.width * 0.8,
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 24, 22, 22),
+                    decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 24, 22, 22),
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -399,14 +412,14 @@ class NoteCard extends StatelessWidget {
                           child: Container(
                             width: Get.width * 0.7,
                             height: Get.height * 0.08,
-                            child: Text(
-                              note.title,
-                              maxLines: 10,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "carter",
-                                  fontSize: 15),
+                            child: SingleChildScrollView(
+                              child: Text(
+                                note.title,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "carter",
+                                    fontSize: 15),
+                              ),
                             ),
                           ),
                         ),
@@ -421,14 +434,22 @@ class NoteCard extends StatelessWidget {
                           child: Container(
                             width: Get.width * 0.7,
                             height: Get.height * 0.3,
-                            child: Text(
-                              note.content,
-                              style: const TextStyle(
-                                  fontFamily: "robotolight",
-                                  fontSize: 15,
-                                  color: Colors.white),
+                            child: SingleChildScrollView(
+                              child: Text(
+                                note.content,
+                                style: const TextStyle(
+                                    fontFamily: "robotolight",
+                                    fontSize: 15,
+                                    color: Colors.white),
+                              ),
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            MyTextButton(onPressed: onPressed, text: "Düzenle"),
+                          ],
                         )
                       ],
                     ),
