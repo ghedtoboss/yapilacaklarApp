@@ -78,8 +78,8 @@ class MyTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
+      style: TextButton.styleFrom(foregroundColor: Colors.purple),
       child: Text(text),
-      style: TextButton.styleFrom(primary: Colors.purple),
     );
   }
 }
@@ -121,7 +121,7 @@ class TodoCard extends StatelessWidget {
                             )),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: Get.width * 0.7,
                             height: Get.height * 0.4,
                             child: SingleChildScrollView(
@@ -178,7 +178,7 @@ class TodoCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: Get.width * 0.7,
                       child: Text(
                         todo.todo,
@@ -225,7 +225,7 @@ class TodoCard extends StatelessWidget {
                                             fontSize: 20,
                                             color: Colors.white),
                                       ),
-                                      Container(
+                                      SizedBox(
                                           width: Get.width * 0.8,
                                           height: Get.height * 0.08,
                                           child: const Text(
@@ -320,7 +320,7 @@ class MyHomeContainer extends StatelessWidget {
                   Color.fromARGB(255, 94, 17, 108)
                 ])),
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -330,7 +330,7 @@ class MyHomeContainer extends StatelessWidget {
                 children: [
                   Text(
                     text,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: "luck", fontSize: 30, color: Colors.white),
                   ),
                   Icon(
@@ -409,7 +409,7 @@ class NoteCard extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: Get.width * 0.7,
                             height: Get.height * 0.08,
                             child: SingleChildScrollView(
@@ -431,7 +431,7 @@ class NoteCard extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: Get.width * 0.7,
                             height: Get.height * 0.3,
                             child: SingleChildScrollView(
@@ -461,7 +461,7 @@ class NoteCard extends StatelessWidget {
           width: Get.width * 0.4,
           height: Get.height * 0.2,
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 221, 217, 217),
+              color: const Color.fromARGB(255, 221, 217, 217),
               borderRadius: BorderRadius.circular(10)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -476,7 +476,7 @@ class NoteCard extends StatelessWidget {
                   note.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: "carter",
                   ),
@@ -489,7 +489,7 @@ class NoteCard extends StatelessWidget {
                 color: Colors.black,
               ),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10)),
@@ -500,7 +500,7 @@ class NoteCard extends StatelessWidget {
                   note.content,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 6,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: "robomedium",
                   ),

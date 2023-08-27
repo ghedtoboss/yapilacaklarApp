@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import 'package:yapilcaklar/pages/register_screen.dart';
-import 'package:yapilcaklar/service/auth_service.dart';
+import 'package:yapilcaklar/service/user_service.dart';
 import 'package:yapilcaklar/widgets/some_widgets.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final authController = Get.put(AuthService());
+  final userServiceController = Get.put(UserService());
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +28,21 @@ class LoginPage extends StatelessWidget {
                         color: Colors.purple, fontFamily: "luck", fontSize: 45),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: Get.width * 0.6,
                   height: Get.height * 0.3,
-                  child: RiveAnimation.asset("assets/animations/logo.riv"),
+                  child:
+                      const RiveAnimation.asset("assets/animations/logo.riv"),
                 ),
                 MyTextFieldWidget(
                     isMaxLinesNull: true,
-                    controller: authController.mailController,
+                    controller: userServiceController.mailController,
                     isObscure: false,
                     labetText: "Email",
                     iconData: Icons.mail),
                 MyTextFieldWidget(
                     isMaxLinesNull: false,
-                    controller: authController.passwordController,
+                    controller: userServiceController.passwordController,
                     isObscure: true,
                     labetText: "Şifre",
                     iconData: Icons.key),
@@ -49,7 +50,7 @@ class LoginPage extends StatelessWidget {
                 MyElevatedButton(
                     text: "Giriş",
                     onPressed: () {
-                      authController.login();
+                      userServiceController.login();
                     }),
                 SizedBox(
                   height: Get.height * 0.15,

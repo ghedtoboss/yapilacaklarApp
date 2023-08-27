@@ -35,7 +35,7 @@ class AddNoteScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: Get.width,
               height: Get.height * 0.3,
               child: const RiveAnimation.asset(

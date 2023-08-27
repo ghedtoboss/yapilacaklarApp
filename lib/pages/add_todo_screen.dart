@@ -36,7 +36,7 @@ class AddTodoPage extends StatelessWidget {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          Container(
+          SizedBox(
             width: Get.width,
             height: Get.height * 0.4,
             child: const RiveAnimation.asset(
@@ -79,8 +79,9 @@ class DateTimePicker extends StatelessWidget {
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-    if (picked != null && picked != todoServiceController.selectedDate.value)
+    if (picked != null && picked != todoServiceController.selectedDate.value) {
       todoServiceController.changeSelectedDate(picked);
+    }
   }
 
   @override
@@ -98,7 +99,7 @@ class DateTimePicker extends StatelessWidget {
             ),
             Obx(() => Text(
                   "Yapılması gereken tarih: ${todoServiceController.selectedDate.value.formatDate}",
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 )),
           ],
         )

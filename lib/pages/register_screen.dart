@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
-import 'package:yapilcaklar/service/auth_service.dart';
+import 'package:yapilcaklar/service/user_service.dart';
 
 import '../widgets/some_widgets.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
-  final authController = Get.find<AuthService>();
+  final userServiceController = Get.find<UserService>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +28,27 @@ class RegisterPage extends StatelessWidget {
                         color: Colors.purple, fontFamily: "luck", fontSize: 45),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: Get.width * 0.6,
                   height: Get.height * 0.3,
-                  child: RiveAnimation.asset("assets/animations/logo.riv"),
+                  child:
+                      const RiveAnimation.asset("assets/animations/logo.riv"),
                 ),
                 MyTextFieldWidget(
                     isMaxLinesNull: true,
-                    controller: authController.adSoyadController,
+                    controller: userServiceController.adSoyadController,
                     isObscure: false,
                     labetText: "Ad soyad",
                     iconData: Icons.person),
                 MyTextFieldWidget(
                     isMaxLinesNull: true,
-                    controller: authController.mailController,
+                    controller: userServiceController.mailController,
                     isObscure: false,
                     labetText: "Email",
                     iconData: Icons.mail),
                 MyTextFieldWidget(
                     isMaxLinesNull: false,
-                    controller: authController.passwordController,
+                    controller: userServiceController.passwordController,
                     isObscure: true,
                     labetText: "Şifre",
                     iconData: Icons.key),
@@ -55,7 +56,7 @@ class RegisterPage extends StatelessWidget {
                 MyElevatedButton(
                     text: "Kayıt ol",
                     onPressed: () {
-                      authController.register();
+                      userServiceController.register();
                     }),
                 MyTextButton(
                     onPressed: () {

@@ -71,13 +71,13 @@ class GetUserTodos extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           return Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: snapshot.data?.docs.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   MyToDo todo =
@@ -126,7 +126,7 @@ class EditTodoScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: Get.width,
               height: Get.height * 0.4,
               child: const RiveAnimation.asset(

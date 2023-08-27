@@ -63,7 +63,7 @@ class NotesScreen extends StatelessWidget {
 }
 
 class GetNotesStream extends StatelessWidget {
-  GetNotesStream({super.key, required this.noteServiceController});
+  const GetNotesStream({super.key, required this.noteServiceController});
   final NoteService noteServiceController;
 
   @override
@@ -77,10 +77,8 @@ class GetNotesStream extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
-
-          var snapList = snapshot.data?.docs;
 
           return Expanded(
             child: GridView.builder(
@@ -89,7 +87,7 @@ class GetNotesStream extends StatelessWidget {
                     crossAxisSpacing: 1,
                     childAspectRatio: 1),
                 shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: snapshot.data?.docs.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   MyNote note =
@@ -146,7 +144,7 @@ class EditNoteScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: Get.width,
               height: Get.height * 0.4,
               child: const RiveAnimation.asset(

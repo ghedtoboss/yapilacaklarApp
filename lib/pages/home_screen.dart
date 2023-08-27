@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yapilcaklar/pages/login_screen.dart';
 import 'package:yapilcaklar/pages/notes_screen.dart';
 import 'package:yapilcaklar/pages/today_screen.dart';
 import 'package:yapilcaklar/pages/todos_screen.dart';
-import 'package:yapilcaklar/service/auth_service.dart';
 import 'package:yapilcaklar/service/todo_service.dart';
 import 'package:yapilcaklar/service/user_service.dart';
 import '../widgets/some_widgets.dart';
@@ -13,7 +11,6 @@ import '../widgets/some_widgets.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final userServiceController = Get.put(UserService());
-  final authController = Get.put(AuthService());
   final todoServiceController = Get.put(ToDoService());
 
   @override
@@ -23,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              authController.quit();
+              userServiceController.quit();
               Get.to(LoginPage());
             },
             icon: const Icon(Icons.logout)),
@@ -46,7 +43,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "HOŞGELDİN",
                 style: TextStyle(
                     color: Colors.white, fontSize: 40, fontFamily: "carter"),
@@ -58,10 +55,6 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.purple, fontSize: 50, fontFamily: "luck"),
                 ),
               ),
-              SizedBox(
-                height: Get.height * 0.08,
-              ),
-              GetTodayTodosCount(),
               SizedBox(
                 height: Get.height * 0.05,
               ),
@@ -91,53 +84,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class GetTodayTodosCount extends StatelessWidget {
-  GetTodayTodosCount({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder(
-        init: ToDoService(),
-        builder: (todoServiceController) {
-          return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: todoServiceController.getUserTodayTodos(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator(); //
-                } else if (snapshot.hasError) {
-                  return Text("Hata: ${snapshot.error}");
-                } else if (!snapshot.hasData || snapshot.data == null) {
-                  return const Text("0");
-                } else if (snapshot.hasData &&
-                    snapshot.data != null &&
-                    (snapshot.data!.docs.isNotEmpty)) {
-                  int count = snapshot.data?.docs.length ?? 0;
-
-                  return FittedBox(
-                      child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                          fontFamily: "luck",
-                          fontSize: 30,
-                          color: Colors.white),
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: "Bugün yapılacak işlerin\nsayısı: "),
-                        TextSpan(
-                            text: '$count',
-                            style: const TextStyle(color: Colors.purple)),
-                      ],
-                    ),
-                  ));
-                }
-
-                return const CircularProgressIndicator(); //
-              });
-        });
   }
 }
