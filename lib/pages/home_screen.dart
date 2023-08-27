@@ -94,60 +94,50 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class GetTodayTodosCount extends StatefulWidget {
+class GetTodayTodosCount extends StatelessWidget {
   GetTodayTodosCount({
     super.key,
   });
 
   @override
-  State<GetTodayTodosCount> createState() => _GetTodayTodosCountState();
-}
-
-class _GetTodayTodosCountState extends State<GetTodayTodosCount> {
- 
-
-  
-
-
-  @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: ToDoService(),
-      builder: (todoServiceController) {
-        return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: todoServiceController.getUserTodayTodos(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); //
-            } else if (snapshot.hasError) {
-              return Text("Hata: ${snapshot.error}");
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return const Text("0");
-            }
-            else if(snapshot.hasData && snapshot.data != null && (snapshot.data!.docs.isNotEmpty)){
-                int count = snapshot.data?.docs.length ?? 0;
+        init: ToDoService(),
+        builder: (todoServiceController) {
+          return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: todoServiceController.getUserTodayTodos(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); //
+                } else if (snapshot.hasError) {
+                  return Text("Hata: ${snapshot.error}");
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return const Text("0");
+                } else if (snapshot.hasData &&
+                    snapshot.data != null &&
+                    (snapshot.data!.docs.isNotEmpty)) {
+                  int count = snapshot.data?.docs.length ?? 0;
 
-              return FittedBox(
-                  child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(
-                      fontFamily: "luck", fontSize: 30, color: Colors.white),
-                  children: <TextSpan>[
-                    const TextSpan(text: "Bugün yapılacak işlerin\nsayısı: "),
-                    TextSpan(
-                        text: '$count',
-                        style: const TextStyle(color: Colors.purple)),
-                  ],
-                ),
-              ));
-             
-            }
+                  return FittedBox(
+                      child: RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                          fontFamily: "luck",
+                          fontSize: 30,
+                          color: Colors.white),
+                      children: <TextSpan>[
+                        const TextSpan(
+                            text: "Bugün yapılacak işlerin\nsayısı: "),
+                        TextSpan(
+                            text: '$count',
+                            style: const TextStyle(color: Colors.purple)),
+                      ],
+                    ),
+                  ));
+                }
 
-             return const CircularProgressIndicator(); //
-           }
-          
-        );
-      }
-    );
+                return const CircularProgressIndicator(); //
+              });
+        });
   }
 }
