@@ -24,6 +24,7 @@ class ToDoService extends GetxController {
     selectedDate.value = DateTime.now();
   }
 
+  //to do oluşturmak için
   Future<void> createToDo() async {
     MyToDo todo = MyToDo(
         id: "",
@@ -41,6 +42,7 @@ class ToDoService extends GetxController {
     await firebase.collection("Todos").doc(docId).update(todo.toMap());
   }
 
+  //user todolarını çekmek için
   Stream<QuerySnapshot<Map<String, dynamic>>> getUserTodos() {
     return FirebaseFirestore.instance
         .collection("Todos")
@@ -66,6 +68,7 @@ class ToDoService extends GetxController {
         .snapshots();
   }
 
+  //düzenlemek için
   Future<void> editTodo(
       MyToDo todo, TextEditingController editTodoController) async {
     await firebase
@@ -74,6 +77,7 @@ class ToDoService extends GetxController {
         .update(<String, String>{"todo": editTodoController.text});
   }
 
+  //bitirme metodu
   Future<void> finishedTodo(MyToDo todo) async {
     await firebase.collection("Todos").doc(todo.id).delete();
   }

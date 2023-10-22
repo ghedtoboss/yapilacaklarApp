@@ -42,22 +42,18 @@ class NotesScreen extends StatelessWidget {
             Get.to(AddNoteScreen(), transition: Transition.rightToLeft);
           },
           label: const Text("Not ekle")),
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Container(
-                width: Get.width,
-                height: Get.height,
-                color: const Color.fromARGB(255, 24, 22, 22),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Column(
-                    children: [
-                      GetNotesStream(
-                          noteServiceController: noteServiceController),
-                    ],
-                  ),
-                ))),
-      ),
+      body: Container(
+          width: Get.width,
+          height: Get.height,
+          color: const Color.fromARGB(255, 24, 22, 22),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Column(
+              children: [
+                GetNotesStream(noteServiceController: noteServiceController),
+              ],
+            ),
+          )),
     );
   }
 }

@@ -40,18 +40,15 @@ class ToDosScreen extends StatelessWidget {
         label: const Text("Ekle"),
         icon: const Icon(Icons.add),
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Container(
-                width: Get.width,
-                height: Get.height,
-                color: const Color.fromARGB(255, 24, 22, 22),
-                child: Column(
-                  children: [
-                    GetUserTodos(todoServiceController: todoServiceController),
-                  ],
-                ))),
-      ),
+      body: Container(
+          width: Get.width,
+          height: Get.height,
+          color: const Color.fromARGB(255, 24, 22, 22),
+          child: Column(
+            children: [
+              GetUserTodos(todoServiceController: todoServiceController),
+            ],
+          )),
     );
   }
 }

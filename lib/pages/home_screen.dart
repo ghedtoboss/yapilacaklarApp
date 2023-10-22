@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yapilcaklar/pages/login_screen.dart';
 import 'package:yapilcaklar/pages/notes_screen.dart';
 import 'package:yapilcaklar/pages/today_screen.dart';
 import 'package:yapilcaklar/pages/todos_screen.dart';
+import 'package:yapilcaklar/service/auth_service.dart';
 import 'package:yapilcaklar/service/todo_service.dart';
 import 'package:yapilcaklar/service/user_service.dart';
 import '../widgets/some_widgets.dart';
@@ -11,6 +13,7 @@ import '../widgets/some_widgets.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final userServiceController = Get.put(UserService());
+  final authServiceController = Get.put(AuthService());
   final todoServiceController = Get.put(ToDoService());
 
   @override
@@ -20,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              userServiceController.quit();
+              authServiceController.quit();
               Get.to(LoginPage());
             },
             icon: const Icon(Icons.logout)),
@@ -55,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.purple, fontSize: 50, fontFamily: "luck"),
                 ),
               ),
+              //GetUserTodayTodoCount(),
               SizedBox(
                 height: Get.height * 0.05,
               ),
@@ -84,5 +88,47 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class GetUserTodayTodoCount extends StatelessWidget {
+  GetUserTodayTodoCount({super.key});
+  final todoServiceController = Get.put(ToDoService());
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: todoServiceController.getUserTodayTodos(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          var snapList = snapshot.data?.docs;
+
+          return Expanded(
+              child: RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context)
+                  .style, // Bu genel metin stilini belirtir.
+              children: <TextSpan>[
+                const TextSpan(
+                    text: "Bugün yapılacak işlerin sayısı:",
+                    style: TextStyle(
+                        color: Colors
+                            .white)),
+                TextSpan(
+                    text: snapList!.length.toString(),
+                    style: const TextStyle(
+                        color: Colors.purple)),
+              ],
+            ),
+          ));
+        });
   }
 }
